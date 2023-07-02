@@ -2,7 +2,7 @@ import {useHttp} from '../../hooks/http.hook';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { heroesFetching, heroesFetched, heroesFetchingError } from '../../actions';
+import { heroesFetching, heroesFetched, heroesFetchingError, deleteHeroAction } from '../../actions';
 import HeroesListItem from "../heroesListItem/HeroesListItem";
 import Spinner from '../spinner/Spinner';
 
@@ -31,18 +31,16 @@ const HeroesList = () => {
         return <h5 className="text-center mt-5">Ошибка загрузки</h5>
     }
 
-    const deleteHero = (id) => {
-        dispatch ({type:'HEROES_FETCHED', payload: heroes.filter(item => item.id !== id)});
-        
-    }
-
-    // deleteItem = (id) => {
-    //     this.setState(({data}) => {
-    //         return {
-    //             data: data.filter(item => item.id !== id)
-    //         }
-    //     })
+    // const deleteHero = (id) => {
+    //     dispatch ({type:'HEROES_FETCHED', payload: heroes.filter(item => item.id !== id)});
     // }
+ 
+    const deleteHero = (id) => {
+        setTimeout(() => {
+          dispatch(deleteHeroAction(id));
+        }, 0);
+      };
+
 
     const renderHeroesList = (arr) => {
         if (arr.length === 0) {
@@ -50,7 +48,10 @@ const HeroesList = () => {
         }
 
         return arr.map(({id, ...props}) => {
-            return <HeroesListItem key={id} {...props} onDelete={() => deleteHero(id)}/>
+            return <HeroesListItem 
+                    key={id} 
+                    {...props} 
+                    onDelete={() => deleteHero(id)}/>
         })
     }
 
@@ -64,4 +65,4 @@ const HeroesList = () => {
     )
 }
 
-export default HeroesList;
+export default HeroesList; 
