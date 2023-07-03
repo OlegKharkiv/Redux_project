@@ -18,16 +18,8 @@ export const heroesFetchingError = () => {
 }
 
 export const deleteHeroAction = (id) => {
-  return (dispatch) => {
-    fetch(`http://localhost:3001/heroes/${id}`, {
-      method: 'DELETE',
-    })
-      .then(() => {
-        dispatch({ type: 'HERO_DELETED', payload: id });
-      })
-      .catch((error) => {
-        console.error('Error deleting hero:', error);
-        // Handle the error appropriately (e.g., show an error message)
-      });
-  }
+  return {
+    type: 'HERO_DELETED',
+    payload: id
+}
 }

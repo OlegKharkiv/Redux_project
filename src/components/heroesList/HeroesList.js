@@ -14,7 +14,7 @@ import Spinner from '../spinner/Spinner';
 const HeroesList = () => {
     const {heroes, heroesLoadingStatus} = useSelector(state => state);
     const dispatch = useDispatch();
-    const {request} = useHttp();
+    const {request, deleteH} = useHttp();
 
     useEffect(() => {
         dispatch(heroesFetching());
@@ -35,11 +35,27 @@ const HeroesList = () => {
     //     dispatch ({type:'HEROES_FETCHED', payload: heroes.filter(item => item.id !== id)});
     // }
  
+    // const deleteHero = async (id) => {
+
+    //     try {
+          
+    //       await fetch(`http://localhost:3001/heroes/${id}`, {
+    //         method: 'DELETE',
+    //       });
+    
+    //       dispatch(deleteHeroAction(id));
+    
+    //     } catch (error) {
+          
+    //       console.error('Error deleting hero:', error);
+    //     }
+    //   };
+
     const deleteHero = (id) => {
-        setTimeout(() => {
-          dispatch(deleteHeroAction(id));
-        }, 0);
-      };
+        deleteH(`http://localhost:3001/heroes/${id}`)
+            .then(dispatch(deleteHeroAction(id)))
+            .catch(() => dispatch(heroesFetchingError()))
+    } 
 
 
     const renderHeroesList = (arr) => {
