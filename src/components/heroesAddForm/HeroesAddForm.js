@@ -1,5 +1,7 @@
 
-
+import { useDispatch, useSelector } from 'react-redux';
+import { heroesFetched } from '../../actions';
+import { v4 as uuidv4 } from 'uuid';
 // Задача для этого компонента:
 // Реализовать создание нового героя с введенными данными. Он должен попадать
 // в общее состояние и отображаться в списке + фильтроваться
@@ -11,8 +13,27 @@
 // данных из фильтров
 
 const HeroesAddForm = () => {
+    const dispatch = useDispatch();
+    const {heroes} = useSelector(state => state);
+
+    const submit = (e) => {
+        e.preventDefault();
+    
+        const newHero = {
+          id: uuidv4(),
+          name: e.target.name.value,
+          description: e.target.text.value,
+          element: e.target.element.value,
+        };
+    
+        dispatch(heroesFetched([...heroes, newHero]));
+    
+        e.target.reset();
+      };
+
+
     return (
-        <form className="border p-4 shadow-lg rounded">
+        <form className="border p-4 shadow-lg rounded" onSubmit={submit}>
             <div className="mb-3">
                 <label htmlFor="name" className="form-label fs-4">Имя нового героя</label>
                 <input 
@@ -20,7 +41,7 @@ const HeroesAddForm = () => {
                     type="text" 
                     name="name" 
                     className="form-control" 
-                    id="name" 
+                    id="name"
                     placeholder="Как меня зовут?"/>
             </div>
 
@@ -30,7 +51,7 @@ const HeroesAddForm = () => {
                     required
                     name="text" 
                     className="form-control" 
-                    id="text" 
+                    id="text"
                     placeholder="Что я умею?"
                     style={{"height": '130px'}}/>
             </div>
@@ -50,7 +71,9 @@ const HeroesAddForm = () => {
                 </select>
             </div>
 
-            <button type="submit" className="btn btn-primary">Создать</button>
+            <button type="submit" 
+                    className="btn btn-primary"
+                    >Создать</button>
         </form>
     )
 }

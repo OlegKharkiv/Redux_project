@@ -31,9 +31,9 @@ const HeroesList = () => {
         return <h5 className="text-center mt-5">Ошибка загрузки</h5>
     }
 
-    // const deleteHero = (id) => {
-    //     dispatch ({type:'HEROES_FETCHED', payload: heroes.filter(item => item.id !== id)});
-    // }
+    const deleteHero = (id) => {
+        dispatch ({type:'HEROES_FETCHED', payload: heroes.filter(item => item.id !== id)});
+    }
  
     // const deleteHero = async (id) => {
 
@@ -51,11 +51,11 @@ const HeroesList = () => {
     //     }
     //   };
 
-    const deleteHero = (id) => {
-        deleteH(`http://localhost:3001/heroes/${id}`)
-            .then(dispatch(deleteHeroAction(id)))
-            .catch(() => dispatch(heroesFetchingError()))
-    } 
+    // const deleteHero = (id) => {
+    //     deleteH(`http://localhost:3001/heroes/${id}`)
+    //         .then(dispatch(deleteHeroAction(id)))
+    //         .catch(() => dispatch(heroesFetchingError()))
+    // } 
 
 
     const renderHeroesList = (arr) => {
