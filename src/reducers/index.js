@@ -22,6 +22,11 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 heroes: state.heroes.filter((item) => item.id !== action.payload)
             }
+        case 'HERO_ADDED':
+            return {
+                ...state,
+                heroes: action.payload
+            }
         case 'HEROES_FETCHING_ERROR':
             return {
                 ...state,

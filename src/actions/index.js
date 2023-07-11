@@ -21,5 +21,12 @@ export const deleteHeroAction = (id) => {
   return {
     type: 'HERO_DELETED',
     payload: id
+    }
 }
+
+export const addHeroAction = (newHero) => {
+    return {
+      type: 'HERO_ADDED',
+      payload: newHero
+  }
 }

@@ -1,7 +1,8 @@
-
+import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { heroesFetched } from '../../actions';
+import { heroesFetched, heroesFetchingError, addHeroAction } from '../../actions';
 import { v4 as uuidv4 } from 'uuid';
+import {useHttp} from '../../hooks/http.hook';
 // Задача для этого компонента:
 // Реализовать создание нового героя с введенными данными. Он должен попадать
 // в общее состояние и отображаться в списке + фильтроваться
@@ -15,8 +16,24 @@ import { v4 as uuidv4 } from 'uuid';
 const HeroesAddForm = () => {
     const dispatch = useDispatch();
     const {heroes} = useSelector(state => state);
+    const {addH, request} = useHttp();
 
-    const submit = (e) => {
+    // const submit = (e) => {
+    //     e.preventDefault();
+    
+    //     const newHero = {
+    //       id: uuidv4(),
+    //       name: e.target.name.value,
+    //       description: e.target.text.value,
+    //       element: e.target.element.value,
+    //     };
+    
+    //     dispatch(heroesFetched([...heroes, newHero]));
+    
+    //     e.target.reset();
+    //   };
+
+      const submit = (e) => {
         e.preventDefault();
     
         const newHero = {
@@ -25,11 +42,22 @@ const HeroesAddForm = () => {
           description: e.target.text.value,
           element: e.target.element.value,
         };
+        
+        
+            addH("http://localhost:3001/heroes", "POST", JSON.stringify(newHero))
+                .then(data => dispatch(heroesFetched([...heroes, data])))
+                .catch(() => dispatch(heroesFetchingError()))
     
-        dispatch(heroesFetched([...heroes, newHero]));
-    
-        e.target.reset();
-      };
+            // eslint-disable-next-line
+        
+            // fetch(`http://localhost:3001/heroes`, {
+            //     method: "POST",
+            //     headers: {'Content-Type': 'application/json'},
+            //     body: JSON.stringify(newHero) 
+            // }).then(response => response.json())
+            //   .then(dispatch(heroesFetched([...heroes, newHero])))
+            e.target.reset();
+        }
 
 
     return (
