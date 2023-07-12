@@ -46,7 +46,7 @@ export const useHttp = () => {
             const response = await fetch(
                 url, 
                 {method, 
-                body,
+                body: JSON.stringify(body),
                 headers});
             
 

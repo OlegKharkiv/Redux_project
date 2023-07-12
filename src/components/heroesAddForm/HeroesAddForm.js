@@ -43,19 +43,10 @@ const HeroesAddForm = () => {
           element: e.target.element.value,
         };
         
-        
-            addH("http://localhost:3001/heroes", "POST", JSON.stringify(newHero))
+            addH("http://localhost:3001/heroes", "POST", newHero)
                 .then(data => dispatch(heroesFetched([...heroes, data])))
                 .catch(() => dispatch(heroesFetchingError()))
     
-            // eslint-disable-next-line
-        
-            // fetch(`http://localhost:3001/heroes`, {
-            //     method: "POST",
-            //     headers: {'Content-Type': 'application/json'},
-            //     body: JSON.stringify(newHero) 
-            // }).then(response => response.json())
-            //   .then(dispatch(heroesFetched([...heroes, newHero])))
             e.target.reset();
         }
 
