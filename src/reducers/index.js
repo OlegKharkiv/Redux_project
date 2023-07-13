@@ -32,6 +32,11 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 heroesLoadingStatus: 'error'
             }
+        case 'FILTERS_FETCHED':
+        return {
+            ...state,
+            filters: action.payload
+        }
         default: return state
     }
 }

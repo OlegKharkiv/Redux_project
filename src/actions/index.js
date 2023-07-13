@@ -24,9 +24,9 @@ export const deleteHeroAction = (id) => {
     }
 }
 
-export const addHeroAction = (newHero) => {
+export const filtersFetched = (filters) => {
     return {
-      type: 'HERO_ADDED',
-      payload: newHero
-  }
+        type: 'FILTERS_FETCHED',
+        payload: filters
+    }
 }

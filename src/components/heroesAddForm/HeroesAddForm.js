@@ -16,7 +16,7 @@ import {useHttp} from '../../hooks/http.hook';
 const HeroesAddForm = () => {
     const dispatch = useDispatch();
     const {heroes} = useSelector(state => state);
-    const {addH, request} = useHttp();
+    const {addH} = useHttp();
 
     // const submit = (e) => {
     //     e.preventDefault();

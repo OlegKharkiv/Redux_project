@@ -20,10 +20,25 @@
     }
   ],
   "filters": [
-    "all",
-    "fire",
-    "water",
-    "wind",
-    "earth"
+    {
+      "id": 1,
+      "filter": "all"
+    },
+    {
+      "id": 2,
+      "filter": "fire"
+    },
+    {
+      "id": 3,
+      "filter": "water"
+    },
+    {
+      "id": 4,
+      "filter": "wind"
+    },
+    {
+      "id": 5,
+      "filter": "earth"
+    }
   ]
 }
