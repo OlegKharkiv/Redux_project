@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import {useHttp} from '../../hooks/http.hook';
 import { useEffect } from 'react';
-import { heroesFetchingError, filtersFetched } from '../../actions';
+import { heroesFetchingError, filtersFetched, heroesFiltered, heroesFetched } from '../../actions';
 // Задача для этого компонента:
 // Фильтры должны формироваться на основании загруженных данных
 // Фильтры должны отображать только нужных героев при выборе
@@ -10,7 +10,7 @@ import { heroesFetchingError, filtersFetched } from '../../actions';
 // Представьте, что вы попросили бэкенд-разработчика об этом
 
 const HeroesFilters = () => {
-    let {filters} = useSelector(state => state);
+    let {filters, heroes} = useSelector(state => state);
     const dispatch = useDispatch();
     const {request} = useHttp();
 
@@ -22,7 +22,35 @@ const HeroesFilters = () => {
             // eslint-disable-next-line
         }, [dispatch, request]);
 
-    
+    //    const handleFilterHeroes = (filter) => {
+    //         dispatch(heroesFiltered(filter))
+    //         // switch (filter) {
+    //         //     case 'fire':
+    //         //         return heroes.filter((item) => item.element === filter)
+    //         //     case 'water':
+    //         //         return heroes.filter((item) => item.element === filter)
+    //         //     case 'wind':
+    //         //         return heroes.filter((item) => item.element === filter)
+    //         //     case 'earth':
+    //         //         return heroes.filter((item) => item.element === filter)
+    //         //     case 'all':
+    //         //         return heroes.map((item) => item)
+    //         //     default: 
+    //         //         return heroes 
+    //         // }
+    //     }
+
+    const handleFilterHeroes = (filter) => {
+        if (filter === 'all') {
+            request("http://localhost:3001/heroes")
+            .then(data => dispatch(heroesFetched(data)))
+            .catch(() => dispatch(heroesFetchingError()))
+        } else {
+          const filteredHeroes = heroes.filter((hero) => hero.element === filter);
+        //   console.log(filteredHeroes);
+          dispatch(heroesFiltered(filteredHeroes));
+        }
+      };
     
 
     return (
@@ -32,8 +60,11 @@ const HeroesFilters = () => {
                 <div className="btn-group">
                     {filters.map((filter) => {
                         return (
-                        <button  className={`btn ${filter.filter === 'all' ? 'btn-outline-dark active' : filter.filter === 'fire' ? 'btn-danger' : filter.filter === 'water' ? 'btn-primary' : filter.filter === 'wind' ? 'btn-success' : 'btn-secondary'}`} 
-                                key={filter.id}>{filter.filter}</button>
+                        <button  className={`btn ${filter.filter === 'all' ? 'btn-outline-dark active' : filter.filter === 'fire' ? 'btn-danger active' : filter.filter === 'water' ? 'btn-primary active' : filter.filter === 'wind' ? 'btn-success active' : 'btn-secondary active'}`} 
+                                 key={filter.id}
+                                 onClick={() => handleFilterHeroes(filter.filter)}
+                                 >{filter.filter}
+                                 </button>
                         )
                     })}
                     {/* <button className="btn btn-danger">Fire</button>

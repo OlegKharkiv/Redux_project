@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { heroesFetching, heroesFetched, heroesFetchingError, deleteHeroAction } from '../../actions';
 import HeroesListItem from "../heroesListItem/HeroesListItem";
 import Spinner from '../spinner/Spinner';
-import { v4 as uuidv4 } from 'uuid';
 
 // Задача для этого компонента:
 // При клике на "крестик" идет удаление персонажа из общего состояния
@@ -36,26 +35,11 @@ const HeroesList = () => {
     //     dispatch ({type:'HEROES_FETCHED', payload: heroes.filter(item => item.id !== id)});
     // }
  
-    // const deleteHero = async (id) => {
-
-    //     try {
-          
-    //       await fetch(`http://localhost:3001/heroes/${id}`, {
-    //         method: 'DELETE',
-    //       });
-    
-    //       dispatch(deleteHeroAction(id));
-    
-    //     } catch (error) {
-          
-    //       console.error('Error deleting hero:', error);
-    //     }
-    //   };
 
     const deleteHero = (id) => {
         deleteH(`http://localhost:3001/heroes/${id}`)
             .then(dispatch(deleteHeroAction(id)))
-            .catch(() => dispatch(heroesFetchingError()))
+            .catch(error => console.log(error))
     } 
 
 

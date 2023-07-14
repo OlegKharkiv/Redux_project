@@ -1,22 +1,28 @@
 {
   "heroes": [
     {
-      "id": 1,
-      "name": "Первый герой",
-      "description": "Первый герой в рейтинге!",
-      "element": "fire"
-    },
-    {
       "id": 2,
       "name": "Неизвестный герой",
       "description": "Скрывающийся в тени",
       "element": "wind"
     },
     {
-      "id": 3,
-      "name": "Морской герой",
-      "description": "Как аквамен, но не из DC",
-      "element": "water"
+      "id": "ac4b30b1-a280-4085-9dd2-e051e38a0712",
+      "name": "Hulk",
+      "description": "dddd",
+      "element": "wind"
+    },
+    {
+      "id": "439190cb-0b7e-4382-977e-6550e44c2221",
+      "name": "Opra",
+      "description": "asas",
+      "element": "fire"
+    },
+    {
+      "id": "493cde2b-1831-4ae2-b13c-17b84dcd8f99",
+      "name": "DFfD",
+      "description": "ggttt",
+      "element": "earth"
     }
   ],
   "filters": [

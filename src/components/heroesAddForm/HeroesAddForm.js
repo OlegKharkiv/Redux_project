@@ -15,23 +15,9 @@ import {useHttp} from '../../hooks/http.hook';
 
 const HeroesAddForm = () => {
     const dispatch = useDispatch();
-    const {heroes} = useSelector(state => state);
+    const {heroes, filters} = useSelector(state => state);
     const {addH} = useHttp();
 
-    // const submit = (e) => {
-    //     e.preventDefault();
-    
-    //     const newHero = {
-    //       id: uuidv4(),
-    //       name: e.target.name.value,
-    //       description: e.target.text.value,
-    //       element: e.target.element.value,
-    //     };
-    
-    //     dispatch(heroesFetched([...heroes, newHero]));
-    
-    //     e.target.reset();
-    //   };
 
       const submit = (e) => {
         e.preventDefault();
@@ -50,6 +36,24 @@ const HeroesAddForm = () => {
             e.target.reset();
         }
 
+        const renderFilters = (filters, status) => {
+            if (status === "loading") {
+                return <option>Загрузка элементов</option>
+            } else if (status === "error") {
+                return <option>Ошибка загрузки</option>
+            }
+            
+           
+            if (filters && filters.length > 0 ) {
+                return filters.map(({id, filter}) => {
+                    // Один из фильтров нам тут не нужен
+                    // eslint-disable-next-line
+                    if (filter === 'all')  return;
+    
+                    return <option key={id} value={filter}>{filter}</option>
+                })
+            }
+        }
 
     return (
         <form className="border p-4 shadow-lg rounded" onSubmit={submit}>
@@ -83,10 +87,11 @@ const HeroesAddForm = () => {
                     id="element" 
                     name="element">
                     <option >Я владею элементом...</option>
-                    <option value="fire">Огонь</option>
+                    {renderFilters(filters)}
+                    {/* <option value="fire">Огонь</option>
                     <option value="water">Вода</option>
                     <option value="wind">Ветер</option>
-                    <option value="earth">Земля</option>
+                    <option value="earth">Земля</option> */}
                 </select>
             </div>
 

@@ -30,3 +30,10 @@ export const filtersFetched = (filters) => {
         payload: filters
     }
 }
+
+export const heroesFiltered = (filter) => {
+    return {
+        type: 'HEROES_FILTERED',
+        payload: filter
+    }
+}
