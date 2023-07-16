@@ -38,6 +38,7 @@ const HeroesList = () => {
 
     const deleteHero = (id) => {
         deleteH(`http://localhost:3001/heroes/${id}`)
+            .then (data => console.log(data, "DELETE"))
             .then(dispatch(deleteHeroAction(id)))
             .catch(error => console.log(error))
     } 

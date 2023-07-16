@@ -1,8 +1,5 @@
-.app {
-    height: 100vh;
-    overflow-y: scroll;
-    background: url('../../assets/hero_bg.jpg') center / cover no-repeat;
-}
+
+
 
 .app__header {
     display: grid;
@@ -16,6 +13,11 @@
     font-weight: 700;
     font-size: 28px;
     line-height: 37px;
+
+    a {
+        color: #931212;
+        text-decoration: none;
+    }
 }
 
 .signin {
@@ -47,13 +49,3 @@
 } 
 
 
-.content {
-    display: grid;
-    grid-template-columns: 560px 440px;
-    max-width: 1040px;
-    margin: 0 auto;
-    padding-top: 30px;
-    &__interactive {
-        padding-left: 40px;
-    }
-}

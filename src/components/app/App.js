@@ -1,21 +1,28 @@
-import HeroesList from '../heroesList/HeroesList';
-import HeroesAddForm from '../heroesAddForm/HeroesAddForm';
-import HeroesFilters from '../heroesFilters/HeroesFilters';
-
+import {lazy, Suspense} from 'react';
+import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import './app.scss';
+import Header from "../pages/header";
+import SigninPage from "../pages/signinPage";
+import Spinner from "../spinner/Spinner";
+
+const MainPage = lazy(() => import('../pages/mainPage'));
+
 
 const App = () => {
     
     return (
-        <main className="app">
-            <div className="content">
-                <HeroesList/>
-                <div className="content__interactive">
-                    <HeroesAddForm/>
-                    <HeroesFilters/>
-                </div>
-            </div>
-        </main>
+        <Router>
+            <main className="app">
+                <Header/>
+                    <Suspense fallback={<Spinner/>}> 
+                        <Routes>
+                            <Route path="/signin" element={<SigninPage />}/>
+                            <Route path="/" element={<MainPage />}/>
+                        </Routes>
+                    </Suspense>
+            </main>
+        </Router>
+        
     )
 }
 
