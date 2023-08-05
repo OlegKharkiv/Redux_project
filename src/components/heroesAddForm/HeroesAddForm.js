@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { heroesFetched, heroesFetchingError, addHeroAction } from '../../actions';
+import { heroesFetched, heroesFetchingError, addHeroAction, heroCreated } from '../../actions/index';
 import { v4 as uuidv4 } from 'uuid';
 import {useHttp} from '../../hooks/http.hook';
 // Задача для этого компонента:
@@ -15,7 +15,8 @@ import {useHttp} from '../../hooks/http.hook';
 
 const HeroesAddForm = () => {
     const dispatch = useDispatch();
-    const {heroes, filters} = useSelector(state => state);
+    const {heroes} = useSelector(state => state.heroes);
+    const {filters} = useSelector(state => state.filters);
     const {addH} = useHttp();
 
 
@@ -30,11 +31,13 @@ const HeroesAddForm = () => {
         };
         
             addH("http://localhost:3001/heroes", "POST", newHero)
-                .then(data => dispatch(heroesFetched([...heroes, data])))
+                .then(dispatch(heroCreated(newHero)))
                 .catch(() => dispatch(heroesFetchingError()))
     
             e.target.reset();
         }
+
+        // .then(data => dispatch(heroesFetched([...heroes, data])))
 
         const renderFilters = (filters, status) => {
             if (status === "loading") {
@@ -46,7 +49,7 @@ const HeroesAddForm = () => {
            
             if (filters && filters.length > 0 ) {
                 return filters.map(({id, filter}) => {
-                    // Один из фильтров нам тут не нужен
+                    
                     // eslint-disable-next-line
                     if (filter === 'all')  return;
     
