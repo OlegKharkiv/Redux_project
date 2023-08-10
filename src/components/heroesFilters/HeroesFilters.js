@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import {useHttp} from '../../hooks/http.hook';
 import { useEffect } from 'react';
-import { filtersFetching, filtersFetched, filtersFetchingError, activeFilterChanged } from '../../actions';
+import { filtersFetching, filtersFetched, filtersFetchingError, activeFilterChanged, fetchFilters } from './heroesFiltersSlice';
 import Spinner from '../spinner/Spinner';
 import classNames from 'classnames';
 // Задача для этого компонента:
@@ -18,12 +18,8 @@ const HeroesFilters = () => {
     const {request} = useHttp();
 
      useEffect(() => {
-            dispatch(filtersFetching());
-            request("http://localhost:3001/filters")
-                .then(data => dispatch(filtersFetched(data)))
-                .catch(() => dispatch(filtersFetchingError()))
-    
-            // eslint-disable-next-line
+            // dispatch(filtersFetching());
+            dispatch(fetchFilters());
         }, []);
 
 

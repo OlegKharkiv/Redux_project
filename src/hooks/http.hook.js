@@ -1,9 +1,8 @@
-import { useCallback } from "react";
 
 export const useHttp = () => {
     // const [process, setProcess] = useState('waiting');
 
-    const request = useCallback(async (url, method = 'GET', body = null, headers = {'Content-Type': 'application/json'}) => {
+    const request = async (url, method = 'GET', body = null, headers = {'Content-Type': 'application/json'}) => {
 
         // setProcess('loading');
 
@@ -18,12 +17,11 @@ export const useHttp = () => {
 
             return data;
         } catch(e) {
-            // setProcess('error');
             throw e;
         }
-    }, []);
+    };
 
-    const deleteH = useCallback(async (url, method = 'DELETE', headers = {'Content-Type': 'application/json'}) => {
+    const deleteH = async (url, method = 'DELETE', headers = {'Content-Type': 'application/json'}) => {
 
 
         try {
@@ -38,12 +36,11 @@ export const useHttp = () => {
             return data;
 
         } catch(e) {
-            // setProcess('error');
             throw e;
         }
-    }, []);
+    };
 
-    const addH = useCallback(async (url, method = 'POST', body, headers = {'Content-Type': 'application/json'}) => {
+    const addH = async (url, method = 'POST', body, headers = {'Content-Type': 'application/json'}) => {
 
 
         try {
@@ -63,20 +60,13 @@ export const useHttp = () => {
             return data;
 
         } catch(e) {
-            // setProcess('error');
+           
             throw e;
         }
-    }, []);
-
-    // const clearError = useCallback(() => {
-        // setProcess('loading');
-    // }, []);
+    };
 
     return {request,
             deleteH,
             addH,
-            // clearError, 
-            // process, 
-            // setProcess
         }
 }
