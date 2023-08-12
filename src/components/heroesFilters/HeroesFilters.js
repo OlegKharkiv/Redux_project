@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
-import {useHttp} from '../../hooks/http.hook';
 import { useEffect } from 'react';
-import { activeFilterChanged, fetchFilters } from './heroesFiltersSlice';
+import { activeFilterChanged, fetchFilters, selectAll } from './heroesFiltersSlice';
 import Spinner from '../spinner/Spinner';
 import classNames from 'classnames';
+import store from '../../store/index';
 // Задача для этого компонента:
 // Фильтры должны формироваться на основании загруженных данных
 // Фильтры должны отображать только нужных героев при выборе
@@ -12,16 +12,15 @@ import classNames from 'classnames';
 // Представьте, что вы попросили бэкенд-разработчика об этом
 
 const HeroesFilters = () => {
-    
-    const {filters, filtersLoadingStatus, activeFilter} = useSelector(state => state.filters);
+    const {filtersLoadingStatus, activeFilter} = useSelector(state => state.filters);
+    // const filters = useSelector(selectAll);
+    const filters = selectAll(store.getState());
     const dispatch = useDispatch();
-    const {request} = useHttp();
 
      useEffect(() => {
             // dispatch(filtersFetching());
             dispatch(fetchFilters());
         }, []);
-
 
 //     const handleFilterHeroes = (filter) => {
 //         if (filter === 'all') {

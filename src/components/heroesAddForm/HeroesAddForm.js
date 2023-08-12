@@ -1,6 +1,6 @@
-import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { heroesFetched, heroesFetchingError, addHeroAction, heroCreated } from '../heroesList/heroesSlice';
+import { heroesFetchingError, heroCreated } from '../heroesList/heroesSlice';
+import { selectAll } from '../heroesFilters/heroesFiltersSlice';
 import { v4 as uuidv4 } from 'uuid';
 import {useHttp} from '../../hooks/http.hook';
 // Задача для этого компонента:
@@ -15,8 +15,8 @@ import {useHttp} from '../../hooks/http.hook';
 
 const HeroesAddForm = () => {
     const dispatch = useDispatch();
-    const {heroes} = useSelector(state => state.heroes);
-    const {filters} = useSelector(state => state.filters);
+    // const {filters} = useSelector(state => state.filters);
+    const filters = useSelector(selectAll);
     const {addH} = useHttp();
 
 

@@ -17,6 +17,18 @@
       "name": "Морской герой",
       "description": "Как аквамен, но не из DC",
       "element": "water"
+    },
+    {
+      "id": "399e720e-e098-4f73-819c-f997245bd140",
+      "name": "ddd",
+      "description": "dddq",
+      "element": "earth"
+    },
+    {
+      "id": "7d62950f-c34f-4357-817b-c5683673a7b6",
+      "name": "HulkG",
+      "description": "wwwww",
+      "element": "water"
     }
   ],
   "filters": [
