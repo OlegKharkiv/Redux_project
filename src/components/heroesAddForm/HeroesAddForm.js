@@ -3,6 +3,7 @@ import { heroesFetchingError, heroCreated } from '../heroesList/heroesSlice';
 import { selectAll } from '../heroesFilters/heroesFiltersSlice';
 import { v4 as uuidv4 } from 'uuid';
 import {useHttp} from '../../hooks/http.hook';
+import { useCreateHeroMutation } from '../../api/apiSlice';
 // Задача для этого компонента:
 // Реализовать создание нового героя с введенными данными. Он должен попадать
 // в общее состояние и отображаться в списке + фильтроваться
@@ -19,6 +20,8 @@ const HeroesAddForm = () => {
     const filters = useSelector(selectAll);
     const {addH} = useHttp();
 
+    const [createHero, {isLoading, error}] = useCreateHeroMutation();
+
 
       const submit = (e) => {
         e.preventDefault();
@@ -30,23 +33,19 @@ const HeroesAddForm = () => {
           element: e.target.element.value,
         };
         
-            addH("http://localhost:3001/heroes", "POST", newHero)
-                .then(dispatch(heroCreated(newHero)))
-                .catch(() => dispatch(heroesFetchingError()))
+        createHero(newHero).unwrap();
     
-            e.target.reset();
+        e.target.reset();
         }
 
-        // .then(data => dispatch(heroesFetched([...heroes, data])))
 
         const renderFilters = (filters, status) => {
-            if (status === "loading") {
+            if (isLoading) {
                 return <option>Загрузка элементов</option>
-            } else if (status === "error") {
+            } else if (error) {
                 return <option>Ошибка загрузки</option>
             }
             
-           
             if (filters && filters.length > 0 ) {
                 return filters.map(({id, filter}) => {
                     

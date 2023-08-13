@@ -1,8 +1,8 @@
-import {useHttp} from '../../hooks/http.hook';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useMemo, useCallback } from 'react';
+import { useSelector } from 'react-redux';
 
-import { deleteHeroAction, fetchHeroes, filteredHeroesSelector } from './heroesSlice';
+
+import { useGetHeroesQuery, useDeleteHeroMutation} from '../../api/apiSlice';
 import HeroesListItem from "../heroesListItem/HeroesListItem";
 import Spinner from '../spinner/Spinner';
 
@@ -12,34 +12,40 @@ import Spinner from '../spinner/Spinner';
 // Удаление идет и с json файла при помощи метода DELETE
 
 const HeroesList = () => {
-    const filteredHeroes = useSelector(filteredHeroesSelector);
-    const heroesLoadingStatus = useSelector(state => state.heroes.heroesLoadingStatus);
-    const dispatch = useDispatch();
-    const {deleteH} = useHttp();
+    const {
+        data: heroes = [],
+        isFetching,
+        isLoading,
+        isError
+    } = useGetHeroesQuery();
 
-    useEffect(() => {
-        dispatch(fetchHeroes());
-        // eslint-disable-next-line
+    const [deleteHero] = useDeleteHeroMutation();
+
+    const activeFilter = useSelector(state => state.filters.activeFilter);
+
+    const filteredHeroes = useMemo(() => {
+        const filteredHeroes = heroes.slice();
+
+        if (activeFilter === "all") {
+            return filteredHeroes;
+        } else {
+            return filteredHeroes.filter(item => item.element === activeFilter);
+        }
+    }, [heroes, activeFilter]);
+
+
+
+    const onDeleteHero = useCallback((id) => {
+        deleteHero(id)
     }, []);
 
-    if (heroesLoadingStatus === "loading") {
+    if (isLoading || isFetching) {
         return <Spinner/>;
-    } else if (heroesLoadingStatus === "error") {
+    } else if (isError) {
         return <h5 className="text-center mt-5">Ошибка загрузки</h5>
     }
 
-    // const deleteHero = (id) => {
-    //     dispatch ({type:'HEROES_FETCHED', payload: heroes.filter(item => item.id !== id)});
-    // }
- 
-
-    const deleteHero = (id) => {
-        deleteH(`http://localhost:3001/heroes/${id}`)
-            .then (data => console.log(data, "DELETE"))
-            .then(dispatch(deleteHeroAction(id)))
-            .catch(error => console.log(error))
-    } 
-
+    
 
     const renderHeroesList = (arr) => {
         if (arr.length === 0) {
@@ -50,12 +56,11 @@ const HeroesList = () => {
             return <HeroesListItem 
                     key={id} 
                     {...props} 
-                    onDelete={() => deleteHero(id)}/>
+                    onDelete={() => onDeleteHero(id)}/>
         })
     }
 
     
-
     const elements = renderHeroesList(filteredHeroes);
     return (
         <ul>
